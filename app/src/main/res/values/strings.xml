@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Guiders</string>
+    <string-array name="level_arrays">
+        <item><font fgcolor='#696969'>Choose a Level</font></item>
+        <item>Below Class 9</item>
+        <item>SEE</item>
+        <item>+2</item>
+        <item>Bachelors</item>
+        <item>A Level</item>
+    </string-array>
+    <string-array name="roles">
+        <item><font fgcolor='#696969'>Select your role</font></item>
+        <item>Learner</item>
+        <item>Tutor</item>
+    </string-array>
+</resources>

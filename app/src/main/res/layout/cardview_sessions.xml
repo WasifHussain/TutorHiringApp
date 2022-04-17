@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="7dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="10dp"
+    android:backgroundTint="#F8F8F8"
+    android:layout_marginHorizontal="10dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/sd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Date: " />
+
+        <TextView
+            android:id="@+id/start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_toRightOf="@+id/sd"
+            android:text="14/04/2022" />
+
+        <TextView
+            android:id="@+id/ed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="36dp"
+            android:layout_toRightOf="@+id/start_date"
+            android:gravity="end"
+            android:text="End Date: " />
+
+        <TextView
+            android:id="@+id/end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/ed"
+            android:textColor="@color/black"
+            android:text="14/04/2022" />
+
+        <TextView
+            android:id="@+id/tn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/end_date"
+            android:layout_marginTop="10dp"
+            android:text="Tutor Name: " />
+
+        <TextView
+            android:id="@+id/tutorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/end_date"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:layout_toRightOf="@+id/tn"
+            android:text="Dhiraj Jha" />
+        <Button
+            android:id="@+id/checkStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tutorName"
+            android:layout_centerHorizontal="true"
+            android:text="Check Status"
+            android:background="@android:color/transparent"
+            android:textColor="@color/theme_color"
+            android:textAllCaps="false"/>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

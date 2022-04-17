@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="7dp"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="6dp">
+
+    <ImageView
+        android:id="@+id/profilepic"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/profile" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:layout_marginStart="110dp">
+
+        <TextView
+            android:id="@+id/fullName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="serif"
+            android:text="Wasif test"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textFontWeight="1" />
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fullName"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="serif"
+            android:text="Hadigaun"
+            android:textSize="15dp" />
+        <TextView
+            android:id="@+id/level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/address"
+            android:layout_marginStart="8dp"
+            android:fontFamily="serif"
+            android:text="Below class 9"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/subject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/level"
+            android:layout_marginStart="8dp"
+            android:ellipsize="end"
+            android:fontFamily="serif"
+            android:maxEms="8"
+            android:singleLine="true"
+            android:text="Digital Logic"
+            android:textSize="15dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="37dp"
+        android:layout_marginRight="10dp">
+
+        <TextView
+            android:id="@+id/currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:text="Rs. "
+            android:textSize="16dp"
+            android:textColor="@color/black"
+             />
+
+        <TextView
+            android:id="@+id/fees"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/currency"
+            android:fontFamily="serif"
+            android:text="4555"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            />
+ <androidx.cardview.widget.CardView
+     android:layout_width="60dp"
+     android:layout_height="30dp"
+     android:backgroundTint="@color/rating"
+     android:layout_below="@+id/fees">
+     <TextView
+         android:id="@+id/ratings"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/currency"
+         android:fontFamily="serif"
+         android:text="0.0"
+         android:padding="5dp"
+         android:drawableEnd="@drawable/ic_baseline_star_24"
+         android:layout_gravity="center_horizontal"
+         android:textColor="@color/white"
+         android:textStyle="bold" />
+ </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
