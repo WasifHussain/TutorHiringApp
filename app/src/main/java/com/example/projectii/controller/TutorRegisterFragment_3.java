@@ -74,8 +74,6 @@ public class TutorRegisterFragment_3 extends Fragment {
         et_aboutMe = view.findViewById(R.id.aboutMe);
 
         rg_teachingMode = view.findViewById(R.id.teachingMode);
-        int teachingMode = rg_teachingMode.getCheckedRadioButtonId();
-        selectedRadioButton = rg_teachingMode.findViewById(teachingMode);
 
         availableSwitch = view.findViewById(R.id.availability);
 
@@ -109,9 +107,10 @@ public class TutorRegisterFragment_3 extends Fragment {
             public void onClick(View view) {
                 khaltiPhone = et_khlatiPhone.getText().toString();
                 aboutMe = et_aboutMe.getText().toString();
+                int teachingMode = rg_teachingMode.getCheckedRadioButtonId();
+                selectedRadioButton = rg_teachingMode.findViewById(teachingMode);
                 mode = selectedRadioButton.getText().toString();
                 isAvailable = availableSwitch.isChecked();
-
 
                 tutorModel = new TutorModel();
                 tutorModel.setFullName(fullName);

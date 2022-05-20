@@ -9,6 +9,7 @@
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/drawable/gradient.xml" value="0.1275" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.127" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1195" />
+        <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/drawable/ic_baseline_update_24.xml" value="0.1265" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/drawable/password_toggle.xml" value="0.127" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/drawable/style_spinner.xml" value="0.127" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/drawable/vertical_divider.xml" value="0.1195" />
@@ -16,6 +17,7 @@
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/actionbar_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/activity_hire_tutor.xml" value="0.176" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/activity_learner_dashboard.xml" value="0.25" />
+        <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/activity_learner_history.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/activity_learner_register.xml" value="0.264" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/activity_session_status.xml" value="0.25416666666666665" />
@@ -25,11 +27,14 @@
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/activity_tutor_register.xml" value="0.264" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/activity_tutor_view.xml" value="0.264" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/cardview_sessions.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/cardview_toptutor.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/cardview_tutor.xml" value="0.536" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/dropdown_userrole.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/fragment_learner_account.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/fragment_learner_account.xml" value="0.176" />
+        <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/fragment_learner_account_adapter.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/fragment_learner_edit_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/fragment_learner_findtutor.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/fragment_learner_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/fragment_learner_home.xml" value="0.1" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/fragment_tutor_register.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/fragment_tutor_register2.xml" value="0.264" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/fragment_tutor_register3.xml" value="0.264" />
@@ -39,6 +44,7 @@
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/toolbar_findtutor.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/toolbar_theme.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/view_review_rating.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/layout/view_session_history.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/menu/search_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/wasif/AndroidStudioProjects/ProjectII/app/src/main/res/mipmap-anydpi-v26/dropdown_icon.xml" value="0.124" />

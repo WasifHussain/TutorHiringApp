@@ -1,12 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:background="@drawable/custom_rectangle"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/learnerprofile" />
+
+        <TextView
+            android:id="@+id/learner_fullName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/montserrat"
+            android:textColor="#fff"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="95dp">
+
+            <TextView
+                android:id="@+id/learner_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/ic_baseline_email_24"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/montserrat"
+                android:textColor="#fff" />
+
+            <TextView
+                android:id="@+id/learner_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/ic_baseline_phone_android_24"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/montserrat"
+                android:textColor="#fff" />
+
+            <TextView
+                android:id="@+id/learner_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/ic_baseline_location_on_24"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/montserrat"
+                android:textColor="#fff" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <ListView
+        android:id="@+id/options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginBottom="15dp"
+        android:background="@color/whitesmoke" />
     <Button
         android:id="@+id/logout"
-        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/errorcolor"
+        android:drawableLeft="@drawable/ic_baseline_logout_24"
+        android:textColor="@color/white"
         android:text="Logout" />
+
 </LinearLayout>

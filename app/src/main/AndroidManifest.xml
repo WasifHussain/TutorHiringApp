@@ -29,6 +29,7 @@
         <activity android:name=".controller.TutorViewActivity"></activity>
         <activity android:name=".controller.HireTutorActivity"></activity>
         <activity android:name=".controller.SessionStatusActivity"></activity>
+        <activity android:name=".controller.LearnerHistoryActivity"></activity>
     </application>
 
 </manifest>

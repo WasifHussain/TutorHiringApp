@@ -21,14 +21,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectii.R;
+import com.example.projectii.model.SessionModel;
 import com.example.projectii.model.TutorModel;
+import com.example.projectii.view.SessionsAdapter;
 import com.example.projectii.view.TutorAdapter;
+import com.example.projectii.view.TutorsAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -36,6 +42,8 @@ import java.util.ArrayList;
 public class FindTutorFragment extends Fragment {
     RecyclerView rv;
     ArrayList<TutorModel> tutorList;
+//    TutorsAdapter adapter;
+//    FirestoreRecyclerAdapter tutorAdapter;
     TutorAdapter tutorAdapter;
     FirebaseFirestore fireStore;
     ProgressDialog progressDialog;
@@ -46,22 +54,29 @@ public class FindTutorFragment extends Fragment {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Choose from the best");
         getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(),R.color.white));
+        getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), R.color.white));
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Fetching tutors... ");
 
         setHasOptionsMenu(true);
         rv = view.findViewById(R.id.rv);
-        rv.setHasFixedSize(true);
+        //rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
         fireStore = FirebaseFirestore.getInstance();
         tutorList = new ArrayList<>();
-        tutorAdapter = new TutorAdapter(tutorList, getContext());
-        EventChangeListener();
+         tutorAdapter = new TutorAdapter(tutorList, getContext());
+
+         EventChangeListener();
+//        Query query = fireStore.collection("Tutors").whereEqualTo("available", true).orderBy("fullName", Query.Direction.ASCENDING);
+//        FirestoreRecyclerOptions<TutorModel> options = new FirestoreRecyclerOptions.Builder<TutorModel>().
+//                setQuery(query, TutorModel.class).build();
+//        tutorAdapter = new TutorsAdapter(options, getContext(), tutorList);
+        //rv.setAdapter(tutorAdapter);
         rv.setAdapter(tutorAdapter);
         return view;
+
     }
 
     private void filter(String newText) {
@@ -97,7 +112,7 @@ public class FindTutorFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    private void EventChangeListener() {
+        private void EventChangeListener() {
         fireStore.collection("Tutors").whereEqualTo("available",true).orderBy("fullName", Query.Direction.ASCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -119,4 +134,15 @@ public class FindTutorFragment extends Fragment {
             }
         });
     }
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        tutorAdapter.stopListening();
+//    }
+//
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        tutorAdapter.startListening();
+//    }
 }
