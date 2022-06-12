@@ -1,8 +1,15 @@
 package com.example.projectii.controller;
 
+import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
+
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,16 +32,27 @@ import com.example.projectii.R;
 import com.example.projectii.model.LearnerModel;
 import com.example.projectii.view.LearnerAccountOptionsAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 public class LearnerAccountFragment extends Fragment {
     Button btnLogout;
     FirebaseAuth mAuth;
     FirebaseFirestore fireStore;
+    FirebaseStorage firebaseStorage;
+    StorageReference storageReference;
+    ImageView iv;
+    Uri imageUri;
     TextView tv1, tv2, tv3, tv4;
     EditText et1, et2, et3, et4, et5;
     Button edit;
@@ -51,6 +70,27 @@ public class LearnerAccountFragment extends Fragment {
         tv2 = view.findViewById(R.id.learner_email);
         tv3 = view.findViewById(R.id.learner_phone);
         tv4 = view.findViewById(R.id.learner_address);
+
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
+        storageReference.child("images");
+        iv = view.findViewById(R.id.learnerProfile);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent();
+                i.setType("image/*");
+                i.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(i, 1);
+            }
+        });
+        StorageReference profileRef = storageReference.child("ProfilePictures").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+            Picasso.get().load(uri).into(iv);
+            }
+        });
 
         fireStore = FirebaseFirestore.getInstance();
         fireStore.collection("Learners").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -125,11 +165,52 @@ public class LearnerAccountFragment extends Fragment {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences sp = getActivity().getSharedPreferences("state",MODE_PRIVATE);
+                SharedPreferences.Editor et = sp.edit();
+                et.putBoolean("loginState",false);
+                et.apply();
                 mAuth.signOut();
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();
             }
         });
+    }
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+           // iv.setImageURI(imageUri);
+            uploadPicture();
+
+        }
+    }
+
+    private void uploadPicture() {
+        final ProgressDialog pd = new ProgressDialog(getContext());
+        pd.setTitle("Changing your profile picture");
+        pd.setMessage("Please wait a few seconds");
+        pd.show();
+        StorageReference imageRef = storageReference.child("ProfilePictures").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        imageRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri).into(iv);
+                    }
+                });
+                pd.dismiss();
+                Toast.makeText(getActivity(), "Profile picture changed successfully ", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                pd.dismiss();
+                Toast.makeText(getActivity(), "Sorry, could not change your profile picture! ", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void editProfile() {
@@ -158,7 +239,6 @@ public class LearnerAccountFragment extends Fragment {
                 new_address = et3.getText().toString();
                 new_phone = et4.getText().toString();
                 new_password = et5.getText().toString();
-
 
                 LearnerModel learnerModel = new LearnerModel();
                 learnerModel.setFullName(new_name);

@@ -2,6 +2,7 @@ package com.example.projectii.controller;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -85,6 +86,7 @@ public class SignInActivity extends AppCompatActivity {
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 email = et_email.getText().toString();
                 password = et_password.getText().toString();
                 srole = spinnerRole.getSelectedItem().toString();
@@ -142,7 +144,12 @@ public class SignInActivity extends AppCompatActivity {
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     Log.d("TAG", "onSuccess" + documentSnapshot.getData());
                     if (srole.equals(documentSnapshot.getString("role"))) {
-                        Toast.makeText(SignInActivity.this, "Signed in Successfully!", Toast.LENGTH_LONG).show();
+                        SharedPreferences lp = getSharedPreferences("state",MODE_PRIVATE);
+                        SharedPreferences.Editor et = lp.edit();
+                        et.putBoolean("loginState",true);
+                        et.putString("role",documentSnapshot.getString("role"));
+                        et.apply();
+                        Toast.makeText(SignInActivity.this, "Signed in Successfully!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SignInActivity.this, LearnerDashboardActivity.class));
                         finish();
                     } else {
@@ -157,7 +164,12 @@ public class SignInActivity extends AppCompatActivity {
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     Log.d("TAG", "onSuccess" + documentSnapshot.getData());
                     if (srole.equals(documentSnapshot.getString("role"))) {
-                        Toast.makeText(SignInActivity.this, "Signed in Successfully!", Toast.LENGTH_LONG).show();
+                        SharedPreferences lp = getSharedPreferences("state",MODE_PRIVATE);
+                        SharedPreferences.Editor et = lp.edit();
+                        et.putBoolean("loginState",true);
+                        et.putString("role",documentSnapshot.getString("role"));
+                        et.apply();
+                        Toast.makeText(SignInActivity.this, "Signed in Successfully!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SignInActivity.this, TutorDashboardActivity.class));
                         finish();
                     } else {

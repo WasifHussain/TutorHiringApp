@@ -5,15 +5,15 @@ public class TutorModel {
     String userId;
     String role;
 
-    public float getAvgRating() {
+    public Double getAvgRating() {
         return avgRating;
     }
 
-    public void setAvgRating(float avgRating) {
+    public void setAvgRating(Double avgRating) {
         this.avgRating = avgRating;
     }
 
-    float avgRating;
+    Double avgRating;
 public TutorModel(){
 
 }

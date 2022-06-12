@@ -15,12 +15,17 @@
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profilepic"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:src="@drawable/profile" />
+            android:padding="3dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_learnerprofile"
+            app:shapeAppearanceOverlay="@style/circular"
+            app:strokeColor="@color/whitesmoke"
+            app:strokeWidth="2dp" />
 
         <TextView
             android:id="@+id/fullName"
@@ -29,6 +34,7 @@
             android:fontFamily="serif"
             android:text="Wasif test"
             android:singleLine="true"
+            android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:layout_gravity="center"
             android:textColor="@color/black"

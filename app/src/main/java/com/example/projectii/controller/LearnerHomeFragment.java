@@ -1,9 +1,12 @@
 package com.example.projectii.controller;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,20 +23,40 @@ import com.example.projectii.view.SessionsAdapter;
 import com.example.projectii.view.TopTutorAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class LearnerHomeFragment extends Fragment {
     RecyclerView rv, rv1;
     FirebaseFirestore fireStore;
     FirestoreRecyclerAdapter adapter, adapter2;
+    FirebaseStorage firebaseStorage;
+    StorageReference storageReference;
     String fullName;
-    TextView tv_fullName;
+    ImageView iv;
+    TextView tv_fullName, tv;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_learner_home,null);
         getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(),R.color.theme_color));
 
+        iv = view.findViewById(R.id.profile);
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
+        storageReference.child("images");
+        StorageReference profileRef = storageReference.child("ProfilePictures").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(iv);
+            }
+        });
+
+        tv = view.findViewById(R.id.message_data);
         rv = view.findViewById(R.id.rv_sessions);
         rv1 = view.findViewById(R.id.rv_toptutors);
         rv.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
@@ -51,6 +74,19 @@ public class LearnerHomeFragment extends Fragment {
         FirestoreRecyclerOptions<SessionModel> options = new FirestoreRecyclerOptions.Builder<SessionModel>().
                 setQuery(query, SessionModel.class).build();
         adapter = new SessionsAdapter(options, getContext(),tv_fullName.getText().toString());
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                int n = adapter.getItemCount();
+                Log.e("msg", String.valueOf(n));
+                if(n == 0) {
+                    tv.setVisibility(View.VISIBLE);
+                }
+                else {
+                    tv.setVisibility(View.GONE);
+                }
+            }
+        });
         rv.setAdapter(adapter);
 
         Query query1 = fireStore.collection("Tutors").whereEqualTo("available", true).whereGreaterThan("avgRating",4).orderBy("avgRating", Query.Direction.DESCENDING).orderBy("fullName", Query.Direction.ASCENDING);

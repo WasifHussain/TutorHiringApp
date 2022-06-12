@@ -30,6 +30,7 @@
         <activity android:name=".controller.HireTutorActivity"></activity>
         <activity android:name=".controller.SessionStatusActivity"></activity>
         <activity android:name=".controller.LearnerHistoryActivity"></activity>
+        <activity android:name=".controller.TutorProfileActivity"></activity>
     </application>
 
 </manifest>

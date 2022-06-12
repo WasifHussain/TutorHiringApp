@@ -61,6 +61,7 @@
             android:textColor="@color/black"
             android:layout_toRightOf="@+id/tn"
             android:text="Dhiraj Jha" />
+
         <Button
             android:id="@+id/checkStatus"
             android:layout_width="wrap_content"

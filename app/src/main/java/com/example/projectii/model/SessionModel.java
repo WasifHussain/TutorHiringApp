@@ -3,13 +3,23 @@ package com.example.projectii.model;
 public class SessionModel {
     String start_date;
     String end_date;
-    Long total_fees;
+    long total_fees;
     String duration;
     String learnerID;
     String tutorID;
     String tutorName;
     String sessionId;
     boolean completed;
+
+    public boolean isTutor_completed() {
+        return tutor_completed;
+    }
+
+    public void setTutor_completed(boolean tutor_completed) {
+        this.tutor_completed = tutor_completed;
+    }
+
+    boolean tutor_completed;
     public String getStart_date() {
         return start_date;
     }
@@ -34,10 +44,10 @@ public class SessionModel {
     public void setTutorID(String tutorID) {
         this.tutorID = tutorID;
     }
-    public Long getTotal_fees() {
+    public long getTotal_fees() {
         return total_fees;
     }
-    public void setTotal_fees(Long total_fees) {
+    public void setTotal_fees(long total_fees) {
         this.total_fees = total_fees;
     }
     public String getSessionId() {

@@ -1,11 +1,13 @@
 package com.example.projectii.controller;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,9 +38,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class TutorViewActivity extends AppCompatActivity {
-    TextView tv_fullName, tv_email, tv_phone, tv_address,tv_qualification, tv_subjects, tv_mode, tv_level, tv_hours, tv_about, tv_ratingCount;
+    TextView tv,tv_fullName, tv_email, tv_phone, tv_address,tv_qualification, tv_subjects, tv_mode, tv_level, tv_hours, tv_about, tv_ratingCount;
+    ImageView iv;
     Button btnHire;
     RecyclerView rv;
     FirebaseFirestore fireStore;
@@ -55,8 +61,9 @@ public class TutorViewActivity extends AppCompatActivity {
         actionBar.setTitle(null);
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
-        tv_ratingCount = findViewById(R.id.rating_count);
 
+        tv = findViewById(R.id.message_data);
+        tv_ratingCount = findViewById(R.id.rating_count);
         tv_fullName = findViewById(R.id.tutor_fullName);
         tv_email = findViewById(R.id.tutor_email);
         tv_phone = findViewById(R.id.tutor_phone);
@@ -67,6 +74,7 @@ public class TutorViewActivity extends AppCompatActivity {
         tv_level = findViewById(R.id.tutor_level);
         tv_hours = findViewById(R.id.tutor_hours);
         tv_about = findViewById(R.id.tutor_about);
+        iv = findViewById(R.id.profilepic);
 
         userId = getIntent().getExtras().getString("uid");
         String fullName = getIntent().getExtras().getString("fullName");
@@ -103,7 +111,17 @@ public class TutorViewActivity extends AppCompatActivity {
                 b.putInt("fees",fees);
                 i.putExtras(b);
                 startActivity(i);
+            }
+        });
 
+        StorageReference storageReference;
+        storageReference = FirebaseStorage.getInstance().getReference();
+        storageReference.child("images");
+        StorageReference profileRef = storageReference.child("ProfilePictures").child(userId);
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(iv);
             }
         });
 
@@ -114,6 +132,19 @@ public class TutorViewActivity extends AppCompatActivity {
         FirestoreRecyclerOptions<ReviewModel> options = new FirestoreRecyclerOptions.Builder<ReviewModel>().
                 setQuery(query, ReviewModel.class).build();
         adapter = new ReviewAdapter(options, TutorViewActivity.this);
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                int n = adapter.getItemCount();
+                Log.e("msg", String.valueOf(n));
+                if(n == 0) {
+                    tv.setVisibility(View.VISIBLE);
+                }
+                else {
+                    tv.setVisibility(View.GONE);
+                }
+            }
+        });
         rv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         averageRating();

@@ -2,10 +2,12 @@ package com.example.projectii.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,11 @@ import com.example.projectii.R;
 import com.example.projectii.controller.LearnerDashboardActivity;
 import com.example.projectii.controller.TutorViewActivity;
 import com.example.projectii.model.TutorModel;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -48,6 +55,16 @@ public class TutorAdapter extends RecyclerView.Adapter<TutorAdapter.MyViewHolder
         holder.tv4.setText(tutorModel.getLevel());
         holder.tv3.setText(String.valueOf(tutorModel.getFees()));
         holder.tv5.setText(new DecimalFormat("#.#").format(tutorModel.getAvgRating()));
+        StorageReference storageReference;
+        storageReference = FirebaseStorage.getInstance().getReference();
+        storageReference.child("images");
+        StorageReference profileRef = storageReference.child("ProfilePictures").child(tutorModel.getUserId());
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(holder.iv);
+            }
+        });
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,6 +100,7 @@ public class TutorAdapter extends RecyclerView.Adapter<TutorAdapter.MyViewHolder
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tv, tv1, tv2, tv3, tv4, tv5;
+        ImageView iv;
         View view;
 
         public MyViewHolder(View convertView) {
@@ -93,6 +111,7 @@ public class TutorAdapter extends RecyclerView.Adapter<TutorAdapter.MyViewHolder
             tv3 = convertView.findViewById(R.id.fees);
             tv4 = convertView.findViewById(R.id.level);
             tv5 = convertView.findViewById(R.id.ratings);
+            iv = convertView.findViewById(R.id.profilepic);
             view = convertView;
         }
     }

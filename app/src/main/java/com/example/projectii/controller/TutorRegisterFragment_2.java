@@ -29,7 +29,6 @@ public class TutorRegisterFragment_2 extends Fragment {
     Spinner spinnerLevel;
     String qualification, teachingHrs, subjects, level;
     int fees;
-    TextView test;
 
     @Nullable
     @Override

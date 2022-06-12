@@ -45,6 +45,7 @@ public class SessionsAdapter extends FirestoreRecyclerAdapter<SessionModel, Sess
                 b.putString("tutorName",sessionModel.getTutorName());
                 b.putString("tutorId", sessionModel.getTutorID());
                 b.putString("sessionId",sessionModel.getSessionId());
+                b.putString("learnerID",sessionModel.getLearnerID());
                 b.putString("learnerName",learnerName);
                 i.putExtras(b);
                 c.startActivity(i);

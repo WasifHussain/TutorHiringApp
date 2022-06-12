@@ -114,7 +114,7 @@ public class SessionStatusActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                Toast.makeText(SessionStatusActivity.this, "Thank you for the feedback!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(SessionStatusActivity.this, "Thank you for the feedback!", Toast.LENGTH_SHORT).show();
                                 alert.dismiss();
                                 startActivity(new Intent(SessionStatusActivity.this, LearnerDashboardActivity.class));
                                 finish();

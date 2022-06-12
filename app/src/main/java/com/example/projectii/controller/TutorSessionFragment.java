@@ -2,53 +2,43 @@ package com.example.projectii.controller;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectii.R;
 import com.example.projectii.model.SessionModel;
-import com.example.projectii.view.LearnerSessionHistoryAdapter;
 import com.example.projectii.view.SessionsAdapter;
+import com.example.projectii.view.TabSessionAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class LearnerHistoryActivity extends AppCompatActivity {
+public class TutorSessionFragment extends Fragment {
+    RecyclerView rv;
     FirebaseFirestore fireStore;
-    RecyclerView rv ;
     FirestoreRecyclerAdapter adapter;
     TextView tv;
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_learner_history);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarId);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Session History");
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        getWindow().setStatusBarColor(ContextCompat.getColor(LearnerHistoryActivity.this, R.color.white));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        tv = findViewById(R.id.message_data);
-        rv = findViewById(R.id.rv);
-        rv.setLayoutManager(new LinearLayoutManager(this));
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_tutor_session, null);
+        rv = view.findViewById(R.id.rv);
+        tv = view.findViewById(R.id.message_data);
+        rv.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         fireStore = FirebaseFirestore.getInstance();
 
-        Query query = fireStore.collection("Sessions").whereEqualTo("learnerID",FirebaseAuth.getInstance().getCurrentUser().getUid()).orderBy("tutorName", Query.Direction.ASCENDING);
+        Query query = fireStore.collection("Sessions").whereEqualTo("tutor_completed", false).whereEqualTo("tutorID", FirebaseAuth.getInstance().getCurrentUser().getUid());
         FirestoreRecyclerOptions<SessionModel> options = new FirestoreRecyclerOptions.Builder<SessionModel>().
                 setQuery(query, SessionModel.class).build();
-        adapter = new LearnerSessionHistoryAdapter(options, LearnerHistoryActivity.this);
+        adapter = new TabSessionAdapter(options, getContext());
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
@@ -62,8 +52,11 @@ public class LearnerHistoryActivity extends AppCompatActivity {
                 }
             }
         });
+
         rv.setAdapter(adapter);
-    }    @Override
+        return view;
+    }
+    @Override
     public void onStop() {
         super.onStop();
         adapter.stopListening();
@@ -73,9 +66,5 @@ public class LearnerHistoryActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         adapter.startListening();
-    }
-    public boolean onOptionsItemSelected(MenuItem item) {
-        finish();
-        return true;
     }
 }

@@ -2,6 +2,7 @@ package com.example.projectii.controller;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -106,7 +107,7 @@ public class LearnerRegisterActivity extends AppCompatActivity {
                             DocumentReference df = firestore.collection("Learners").document(user.getUid());
                             df.set(learnerModel);
                             pd.dismiss();
-                            Toast.makeText(LearnerRegisterActivity.this, "Signed Up Successfully!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LearnerRegisterActivity.this, "Signed Up Successfully!", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LearnerRegisterActivity.this, SignInActivity.class));
                             finish();
                         }
@@ -128,9 +129,9 @@ public class LearnerRegisterActivity extends AppCompatActivity {
             et_fullname.requestFocus();
             et_fullname.setError("Field cannot be empty");
             valid = false;
-        }else if (fullName.length()<=10) {
+        }else if (fullName.length()<=8) {
             et_fullname.requestFocus();
-            et_fullname.setError("Name must be greater than 10 characters ");
+            et_fullname.setError("Name must be greater than 8 characters ");
             valid = false;
         }
         else if (!fullName.matches("[a-zA-Z\\s]+")) {

@@ -13,4 +13,6 @@
         <item>Learner</item>
         <item>Tutor</item>
     </string-array>
+    <string name="open">Drawer/Nav Open</string>
+    <string name="close">Drawer/Nav close</string>
 </resources>

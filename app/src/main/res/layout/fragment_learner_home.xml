@@ -71,11 +71,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent">
 
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/profile"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:padding="3dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/learnerprofile" />
+                        android:src="@drawable/img_learnerprofile"
+                        android:scaleType="centerCrop"
+                        app:shapeAppearanceOverlay="@style/circular"
+                        app:strokeWidth="2dp"
+                        app:strokeColor="@color/whitesmoke"/>
                 </LinearLayout>
 
 
@@ -117,6 +123,16 @@
                         android:id="@+id/rv_sessions"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/message_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="There is no ongoing session."
+                    android:layout_gravity="center_horizontal"
+                    android:textStyle="italic"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/ubuntu"
+                    android:textSize="20dp" />
 
                 <View
                     android:layout_width="match_parent"

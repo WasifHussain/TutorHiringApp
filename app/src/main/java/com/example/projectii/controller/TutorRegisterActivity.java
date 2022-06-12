@@ -1,6 +1,7 @@
 package com.example.projectii.controller;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +33,7 @@ public class TutorRegisterActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null ) {
+        if (user != null) {
             startActivity(new Intent(TutorRegisterActivity.this, TutorDashboardActivity.class));
             finish();
         }

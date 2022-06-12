@@ -178,8 +178,7 @@ public class HireTutorActivity extends AppCompatActivity {
                         tv_days.setText(dayDifference);
                         totalFees = fees * differenceDates;
                         tv_totalFees.setText(String.valueOf(totalFees));
-                        tf = totalFees * 100L;
-
+                        tf = totalFees;
 
                         khaltiImplementation(userId, fullName, tf);
                     } else {
@@ -195,7 +194,7 @@ public class HireTutorActivity extends AppCompatActivity {
 
     public void khaltiImplementation(String tutorId, String fullName, Long paisa) {
 
-        Config.Builder builder = new Config.Builder(Constant.pub, tutorId, fullName, paisa, new OnCheckOutListener() {
+        Config.Builder builder = new Config.Builder("test_public_key_4e6fd18930454b7c962b50f510ea9d0f", tutorId, fullName, paisa, new OnCheckOutListener() {
             @Override
             public void onError(@NonNull String action, @NonNull Map<String, String> errorMap) {
                 Log.i(action, errorMap.toString());
