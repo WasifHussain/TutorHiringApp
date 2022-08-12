@@ -325,6 +325,7 @@
                         android:layout_marginVertical="15dp"
                         android:fontFamily="@font/montserrat"
                         android:text=")" />
+
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView

@@ -1,5 +1,7 @@
 package com.example.projectii.controller;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.projectii.R;
 import com.example.projectii.model.SessionModel;
 import com.example.projectii.model.TutorModel;
@@ -32,9 +35,9 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class LearnerHomeFragment extends Fragment {
-    RecyclerView rv, rv1;
+    RecyclerView rv, rv1,rv2;
     FirebaseFirestore fireStore;
-    FirestoreRecyclerAdapter adapter, adapter2;
+    FirestoreRecyclerAdapter adapter, adapter2,adapter3;
     FirebaseStorage firebaseStorage;
     StorageReference storageReference;
     String fullName;
@@ -43,30 +46,41 @@ public class LearnerHomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_learner_home,null);
         getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(),R.color.theme_color));
-
         iv = view.findViewById(R.id.profile);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
         firebaseStorage = FirebaseStorage.getInstance();
-        storageReference = firebaseStorage.getReference();
-        storageReference.child("images");
-        StorageReference profileRef = storageReference.child("ProfilePictures").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(iv);
-            }
-        });
+//        storageReference = firebaseStorage.getReference();
+//        storageReference.child("images");
+//        StorageReference profileRef = storageReference.child("ProfilePictures").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Picasso.get().load(uri).into(iv);
+//            }
+//        });
+
 
         tv = view.findViewById(R.id.message_data);
         rv = view.findViewById(R.id.rv_sessions);
         rv1 = view.findViewById(R.id.rv_toptutors);
+        rv2 = view.findViewById(R.id.rv_besttutors);
         rv.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         rv1.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+        rv2.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         tv_fullName = view.findViewById(R.id.learner_fullName);
         fireStore = FirebaseFirestore.getInstance();
         fireStore.collection("Learners").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .get().addOnCompleteListener(task -> {
             if(task.isSuccessful() && task.getResult() != null){
                 fullName = task.getResult().getString("fullName");
+                Glide.with(getContext()).load(task.getResult().getString("profilePicUri")).placeholder(R.drawable.img_learnerprofile).into(iv);
                 tv_fullName.setText(fullName);
             }
         });
@@ -94,13 +108,20 @@ public class LearnerHomeFragment extends Fragment {
                 setQuery(query1, TutorModel.class).build();
         adapter2 = new TopTutorAdapter(options1,getContext());
         rv1.setAdapter(adapter2);
-        return view;
+
+        Query query2 = fireStore.collection("Tutors").whereEqualTo("available", true).orderBy("pos_review_count", Query.Direction.DESCENDING).orderBy("fullName", Query.Direction.ASCENDING);
+        FirestoreRecyclerOptions<TutorModel> options2 = new FirestoreRecyclerOptions.Builder<TutorModel>().
+                setQuery(query2, TutorModel.class).build();
+        adapter3 = new TopTutorAdapter(options2,getContext());
+        rv2.setAdapter(adapter3);
     }
+
     @Override
     public void onStop() {
         super.onStop();
         adapter.stopListening();
         adapter2.stopListening();
+        adapter3.stopListening();
     }
 
     @Override
@@ -108,5 +129,6 @@ public class LearnerHomeFragment extends Fragment {
         super.onStart();
         adapter.startListening();
         adapter2.startListening();
+        adapter3.startListening();
     }
 }

@@ -24,6 +24,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.example.projectii.R;
 import com.example.projectii.view.TabAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,6 +34,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -52,6 +54,7 @@ public class TutorDashboardActivity extends AppCompatActivity {
     StorageReference storageReference;
     ImageView iv;
     Uri imageUri;
+    DocumentReference userDoc;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +77,7 @@ public class TutorDashboardActivity extends AppCompatActivity {
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         storageReference.child("images");
+        userDoc = FirebaseFirestore.getInstance().collection("Tutors").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
         iv = header.findViewById(R.id.profile_img);
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,20 +88,20 @@ public class TutorDashboardActivity extends AppCompatActivity {
                 startActivityForResult(i, 1);
             }
         });
-        StorageReference profileRef = storageReference.child("ProfilePictures").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(iv);
-            }
-        });
-
+//        StorageReference profileRef = storageReference.child("ProfilePictures").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Picasso.get().load(uri).into(iv);
+//            }
+//        });
         mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore.getInstance().collection("Tutors").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .get().addOnCompleteListener(task -> {
             if(task.isSuccessful() && task.getResult() != null){
                 tv_name.setText(task.getResult().getString("fullName"));
                 tv_rating.setText(String.valueOf(task.getResult().get("avgRating")));
+                Glide.with(TutorDashboardActivity.this).load(task.getResult().getString("profilePicUri")).placeholder(R.drawable.img_learnerprofile).into(iv);
             }
         });
 
@@ -204,6 +208,7 @@ public class TutorDashboardActivity extends AppCompatActivity {
                 imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
+                        userDoc.update("profilePicUri" ,uri.toString() );
                         Picasso.get().load(uri).into(iv);
                     }
                 });

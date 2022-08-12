@@ -47,7 +47,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Random;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class HireTutorActivity extends AppCompatActivity {
     Button btn_start, btn_today, btn_confirm;
@@ -126,6 +137,7 @@ public class HireTutorActivity extends AppCompatActivity {
                         AlertDialog.THEME_HOLO_LIGHT
                         , dateSetListener1, year, month, day);
                 datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
                 datePickerDialog.show();
             }
         });
@@ -227,6 +239,52 @@ public class HireTutorActivity extends AppCompatActivity {
                     }
                 });
                 Log.i("success", data.toString());
+                try {
+                    String stringSenderEmail = "wasifbca19@oic.edu.np";
+                    String stringReceiverEmail = "hussainwasif33@gmail.com";
+                    String stringPasswordSenderEmail = "@@wasif321";
+
+                    String stringHost = "smtp.gmail.com";
+
+                    Properties properties = System.getProperties();
+
+                    properties.put("mail.smtp.host", stringHost);
+                    properties.put("mail.smtp.port", "465");
+                    properties.put("mail.smtp.ssl.enable", "true");
+                    properties.put("mail.smtp.auth", "true");
+
+                    javax.mail.Session session = Session.getInstance(properties, new Authenticator() {
+                        @Override
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(stringSenderEmail, stringPasswordSenderEmail);
+                        }
+                    });
+
+                    MimeMessage mimeMessage = new MimeMessage(session);
+                    mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(stringReceiverEmail));
+
+                    mimeMessage.setSubject("Congratulations! You are hired.");
+                    mimeMessage.setText("Hello "+ fullName+", \n\nYou are hired for " + dayDifference+ " days."+"\nStart Date: "+ btn_start.getText().toString()
+                                    +"\nEnd Date: "+btn_today.getText().toString()+
+                            "\n\n Your total fees for this session will be: Rs. "+ totalFees  +"\n\n Once you have completed your session, fees will be transferred to your Khalti number \n Thank You! \n\n Team Guiders");
+
+                    Thread thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Transport.send(mimeMessage);
+                            } catch (MessagingException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    thread.start();
+
+                } catch (AddressException e) {
+                    e.printStackTrace();
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
                 Toast.makeText(HireTutorActivity.this,"Congratulations tutor has been hired successfully",Toast.LENGTH_LONG).show();
                 startActivity(new Intent(HireTutorActivity.this,LearnerDashboardActivity.class));
                 finish();

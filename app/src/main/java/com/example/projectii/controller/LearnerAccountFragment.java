@@ -28,8 +28,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.projectii.R;
 import com.example.projectii.model.LearnerModel;
+import com.example.projectii.model.TutorModel;
 import com.example.projectii.view.LearnerAccountOptionsAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -84,13 +86,14 @@ public class LearnerAccountFragment extends Fragment {
                 startActivityForResult(i, 1);
             }
         });
-        StorageReference profileRef = storageReference.child("ProfilePictures").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-            Picasso.get().load(uri).into(iv);
-            }
-        });
+//        StorageReference profileRef = storageReference.child("ProfilePictures").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                 Picasso.get().load(uri).into(iv);
+//            }
+//        });
+
 
         fireStore = FirebaseFirestore.getInstance();
         fireStore.collection("Learners").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -101,6 +104,7 @@ public class LearnerAccountFragment extends Fragment {
                 address = task.getResult().getString("address");
                 phone = task.getResult().getString("phone");
                 password = task.getResult().getString("password");
+                Glide.with(getContext()).load(task.getResult().getString("profilePicUri")).placeholder(R.drawable.img_learnerprofile).into(iv);
                 tv1.setText(fullName);
                 tv2.setText(email);
                 tv3.setText(phone);
@@ -197,6 +201,8 @@ public class LearnerAccountFragment extends Fragment {
                 imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
+                        DocumentReference userDoc = fireStore.collection("Learners").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        userDoc.update("profilePicUri",uri.toString());
                         Picasso.get().load(uri).into(iv);
                     }
                 });
@@ -256,7 +262,7 @@ public class LearnerAccountFragment extends Fragment {
                 }
             }
         });
-    }
+     }
 
     private boolean dataValid() {
         boolean valid;

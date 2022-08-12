@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="200dp"
-    android:layout_height="wrap_content"
+    android:layout_width="160dp"
+    android:layout_height="180dp"
     android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="7dp"
     app:cardCornerRadius="15dp"
@@ -11,16 +11,16 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:layout_gravity="center"
         android:orientation="vertical">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profilepic"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
-            android:padding="3dp"
+            android:padding="1dp"
             android:scaleType="centerCrop"
             android:src="@drawable/img_learnerprofile"
             app:shapeAppearanceOverlay="@style/circular"
@@ -39,7 +39,7 @@
             android:layout_gravity="center"
             android:textColor="@color/black"
             android:textFontWeight="1"
-            android:textSize="18dp" />
+            android:textSize="16dp" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -54,41 +54,48 @@
                 android:text="Rs. "
                 android:paddingTop="3dp"
                 android:textColor="@color/black"
-                android:textSize="16dp"
+                android:textSize="14dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/fees"
-                android:paddingTop="3dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/currency"
                 android:fontFamily="serif"
+                android:paddingTop="3dp"
                 android:text="4555"
                 android:textColor="@color/black"
-                android:textSize="16dp"
+                android:textSize="14dp"
                 android:textStyle="bold" />
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="60dp"
-                android:layout_height="30dp"
+            <RelativeLayout
+                android:id="@+id/rate"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
                 android:layout_marginLeft="20dp"
+                android:layout_marginTop="3dp"
                 android:layout_toRightOf="@+id/fees"
-                android:backgroundTint="@color/rating">
+                android:gravity="center_horizontal"
+                android:background="@color/rating">
 
                 <TextView
                     android:id="@+id/ratings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/currency"
-                    android:layout_gravity="center_horizontal"
-                    android:drawableEnd="@drawable/ic_baseline_star_24"
                     android:fontFamily="serif"
-                    android:padding="5dp"
+                    android:padding="1dp"
                     android:text="0.0"
+                    android:textSize="13dp"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
-            </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/ratings"
+                    android:src="@drawable/ic_baseline_star_24" />
+            </RelativeLayout>
 
         </RelativeLayout>
 

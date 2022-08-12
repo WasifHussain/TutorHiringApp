@@ -23,6 +23,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+
+
+//Not being implemented in this project
+
+
 public class TutorsAdapter extends FirestoreRecyclerAdapter<TutorModel, TutorsAdapter.myViewHolder> {
     Context c;
     private ArrayList<TutorModel> list;

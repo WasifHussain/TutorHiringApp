@@ -10,6 +10,15 @@ public class LearnerModel {
     String role;
     String userId;
 
+    public String getProfilePicUri() {
+        return profilePicUri;
+    }
+
+    public void setProfilePicUri(String profilePicUri) {
+        this.profilePicUri = profilePicUri;
+    }
+
+    String profilePicUri;
     public String getUserId() {
         return userId;
     }

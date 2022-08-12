@@ -8,6 +8,16 @@ public class ReviewModel {
     String learnerName;
     String review;
     String createdAt;
+
+    public String getSentiment_value() {
+        return sentiment_value;
+    }
+
+    public void setSentiment_value(String sentiment_value) {
+        this.sentiment_value = sentiment_value;
+    }
+
+    String sentiment_value;
     float rating;
 
     public String getCreatedAt() {

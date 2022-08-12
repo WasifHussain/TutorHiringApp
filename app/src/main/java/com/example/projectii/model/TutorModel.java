@@ -5,7 +5,8 @@ public class TutorModel {
     String userId;
     String role;
 
-    public Double getAvgRating() {
+    public Double
+    getAvgRating() {
         return avgRating;
     }
 
@@ -14,29 +15,6 @@ public class TutorModel {
     }
 
     Double avgRating;
-public TutorModel(){
-
-}
-    public TutorModel(int fees, String userId, String role, String fullName, String email, String address, String phone, String password, String qualification, String level, String teachingHour, String subjects, String khaltiNumber, String about, String mode, String imageUri, boolean isAvailable) {
-        this.fees = fees;
-        this.userId = userId;
-        this.role = role;
-        this.fullName = fullName;
-        this.email = email;
-        this.address = address;
-        this.phone = phone;
-        this.password = password;
-        this.qualification = qualification;
-        this.level = level;
-        this.teachingHour = teachingHour;
-        this.subjects = subjects;
-        this.khaltiNumber = khaltiNumber;
-        this.about = about;
-        this.mode = mode;
-        this.imageUri = imageUri;
-        this.isAvailable = isAvailable;
-    }
-
     String fullName;
     String email;
     String address;
@@ -50,7 +28,36 @@ public TutorModel(){
     String about;
     String mode;
     String imageUri;
+
+    public String getProfilePicUri() {
+        return profilePicUri;
+    }
+
+    public void setProfilePicUri(String profilePicUri) {
+        this.profilePicUri = profilePicUri;
+    }
+
+    String profilePicUri;
     boolean isAvailable;
+
+    public int getPos_review_count() {
+        return pos_review_count;
+    }
+
+    public void setPos_review_count(int pos_review_count) {
+        this.pos_review_count = pos_review_count;
+    }
+
+    public int getNeg_review_count() {
+        return neg_review_count;
+    }
+
+    public void setNeg_review_count(int neg_review_count) {
+        this.neg_review_count = neg_review_count;
+    }
+
+    int pos_review_count;
+    int neg_review_count;
 
     public String getUserId() {
         return userId;

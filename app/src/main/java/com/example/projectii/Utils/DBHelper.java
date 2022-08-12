@@ -1,4 +1,4 @@
-package com.example.projectii.DBUtil;
+package com.example.projectii.Utils;
 
 import android.content.ContentValues;
 import android.content.Context;

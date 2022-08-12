@@ -16,7 +16,7 @@
         android:layout_marginVertical="5dp"
         android:layout_marginLeft="5dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/img_learnerprofile"
+        android:src="@drawable/img_profile"
         app:shapeAppearanceOverlay="@style/rounded"
         app:strokeColor="@color/whitesmoke"
         app:strokeWidth="2dp" />

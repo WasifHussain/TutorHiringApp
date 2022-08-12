@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bumptech.glide.Glide;
 import com.example.projectii.R;
 import com.example.projectii.model.ReviewModel;
 import com.example.projectii.model.SessionModel;
@@ -43,7 +44,8 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class TutorViewActivity extends AppCompatActivity {
-    TextView tv,tv_fullName, tv_email, tv_phone, tv_address,tv_qualification, tv_subjects, tv_mode, tv_level, tv_hours, tv_about, tv_ratingCount;
+    TextView tv,tv_fullName, tv_email, tv_phone, tv_address,tv_qualification, tv_subjects, tv_mode,
+            tv_level, tv_hours, tv_about, tv_ratingCount;
     ImageView iv;
     Button btnHire;
     RecyclerView rv;
@@ -88,6 +90,7 @@ public class TutorViewActivity extends AppCompatActivity {
         String hours = getIntent().getExtras().getString("teachingHrs");
         String about = getIntent().getExtras().getString("about");
         int fees = getIntent().getExtras().getInt("fees");
+        String profilePicUri = getIntent().getExtras().getString("profilePicUri");
 
         tv_fullName.setText(fullName);
         tv_email.setText(email);
@@ -114,16 +117,17 @@ public class TutorViewActivity extends AppCompatActivity {
             }
         });
 
-        StorageReference storageReference;
-        storageReference = FirebaseStorage.getInstance().getReference();
-        storageReference.child("images");
-        StorageReference profileRef = storageReference.child("ProfilePictures").child(userId);
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(iv);
-            }
-        });
+//        StorageReference storageReference;
+//        storageReference = FirebaseStorage.getInstance().getReference();
+//        storageReference.child("images");
+//        StorageReference profileRef = storageReference.child("ProfilePictures").child(userId);
+//        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Picasso.get().load(uri).into(iv);
+//            }
+//        });
+        Glide.with(TutorViewActivity.this).load(profilePicUri).into(iv);
 
         rv = findViewById(R.id.rv_reviews);
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -174,6 +178,9 @@ public class TutorViewActivity extends AppCompatActivity {
                         double total = 0.0;
                         double average= 0.0;
                         double count = 0.0;
+                        int pos = 0;
+                        int neg = 0;
+
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("TAG", document.getId() + " => " + document.getData()+userId);
@@ -183,11 +190,24 @@ public class TutorViewActivity extends AppCompatActivity {
                                 average = total/count;
                                 int c = (int) count;
                                 tv_ratingCount.setText(String.valueOf(c));
+                                Log.e("reviews", String.valueOf(c));
+                                String sentiment_value = (String) document.get("sentiment_value");
+                                int s = Integer.parseInt(sentiment_value);
 
+                                if (s==1) {
+                                    pos = pos + 1;
+                                    Log.e("positive", String.valueOf(pos));
+                                }
+                                if(s==0){
+                                    neg = neg+1;
+                                    Log.e("negative",String.valueOf(neg));
+                                }
                             }
                             Log.d("User Id",userId);
                             DocumentReference userDoc = fireStore.collection("Tutors").document(userId);
                             userDoc.update("avgRating" ,average );
+                            userDoc.update("pos_review_count",pos);
+                            userDoc.update("neg_review_count",neg);
 
                         } else {
                             Log.w("TAG", "Error getting documents.", task.getException());

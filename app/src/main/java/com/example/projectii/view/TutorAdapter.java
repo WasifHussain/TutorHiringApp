@@ -13,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.projectii.R;
 import com.example.projectii.controller.LearnerDashboardActivity;
 import com.example.projectii.controller.TutorViewActivity;
@@ -55,16 +57,18 @@ public class TutorAdapter extends RecyclerView.Adapter<TutorAdapter.MyViewHolder
         holder.tv4.setText(tutorModel.getLevel());
         holder.tv3.setText(String.valueOf(tutorModel.getFees()));
         holder.tv5.setText(new DecimalFormat("#.#").format(tutorModel.getAvgRating()));
-        StorageReference storageReference;
-        storageReference = FirebaseStorage.getInstance().getReference();
-        storageReference.child("images");
-        StorageReference profileRef = storageReference.child("ProfilePictures").child(tutorModel.getUserId());
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(holder.iv);
-            }
-        });
+//        StorageReference storageReference;
+//        storageReference = FirebaseStorage.getInstance().getReference();
+//        storageReference.child("images");
+//        StorageReference profileRef = storageReference.child("ProfilePictures").child(tutorModel.getUserId());
+//        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Glide.with(c).load(uri).placeholder(R.drawable.img_profile).into(holder.iv);
+////                Picasso.get().load(uri).into(holder.iv);
+//            }
+//        });
+        Glide.with(c).load(tutorModel.getProfilePicUri()).placeholder(R.drawable.img_profile).into(holder.iv);
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,6 +86,7 @@ public class TutorAdapter extends RecyclerView.Adapter<TutorAdapter.MyViewHolder
                 b.putString("teachingHrs",tutorModel.getTeachingHour());
                 b.putString("about", tutorModel.getAbout());
                 b.putInt("fees",tutorModel.getFees());
+                b.putString("profilePicUri",tutorModel.getProfilePicUri());
                 i.putExtras(b);
                 c.startActivity(i);
             }

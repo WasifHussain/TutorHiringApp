@@ -1,5 +1,7 @@
 package com.example.projectii.controller;
 
+import static android.service.controls.ControlsProviderService.TAG;
+
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +35,7 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -42,7 +45,7 @@ import java.util.ArrayList;
 public class FindTutorFragment extends Fragment {
     RecyclerView rv;
     ArrayList<TutorModel> tutorList;
-//    TutorsAdapter adapter;
+    //    TutorsAdapter adapter;
 //    FirestoreRecyclerAdapter tutorAdapter;
     TutorAdapter tutorAdapter;
     FirebaseFirestore fireStore;
@@ -63,12 +66,15 @@ public class FindTutorFragment extends Fragment {
         rv = view.findViewById(R.id.rv);
         //rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .build();
         fireStore = FirebaseFirestore.getInstance();
+        fireStore.setFirestoreSettings(settings);
         tutorList = new ArrayList<>();
-         tutorAdapter = new TutorAdapter(tutorList, getContext());
+        tutorAdapter = new TutorAdapter(tutorList, getContext());
 
-         EventChangeListener();
+        EventChangeListener();
 //        Query query = fireStore.collection("Tutors").whereEqualTo("available", true).orderBy("fullName", Query.Direction.ASCENDING);
 //        FirestoreRecyclerOptions<TutorModel> options = new FirestoreRecyclerOptions.Builder<TutorModel>().
 //                setQuery(query, TutorModel.class).build();
@@ -112,8 +118,8 @@ public class FindTutorFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-        private void EventChangeListener() {
-        fireStore.collection("Tutors").whereEqualTo("available",true).orderBy("fullName", Query.Direction.ASCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
+    private void EventChangeListener() {
+        fireStore.collection("Tutors").whereEqualTo("available", true).orderBy("fullName", Query.Direction.ASCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if (e != null) {

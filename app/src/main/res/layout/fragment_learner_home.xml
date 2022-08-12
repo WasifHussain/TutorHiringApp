@@ -75,13 +75,13 @@
                         android:id="@+id/profile"
                         android:layout_width="85dp"
                         android:layout_height="85dp"
-                        android:padding="3dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/img_learnerprofile"
+                        android:padding="3dp"
                         android:scaleType="centerCrop"
+                        android:src="@drawable/img_learnerprofile"
                         app:shapeAppearanceOverlay="@style/circular"
-                        app:strokeWidth="2dp"
-                        app:strokeColor="@color/whitesmoke"/>
+                        app:strokeColor="@color/whitesmoke"
+                        app:strokeWidth="2dp" />
                 </LinearLayout>
 
 
@@ -113,26 +113,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
                     android:text="Ongoing sessions"
                     android:textColor="@color/black"
                     android:textSize="15dp"
                     android:textStyle="bold" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_sessions"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_sessions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
                 <TextView
                     android:id="@+id/message_data"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="There is no ongoing session."
                     android:layout_gravity="center_horizontal"
-                    android:textStyle="italic"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/ubuntu"
-                    android:textSize="20dp" />
+                    android:text="There is no ongoing session."
+                    android:textSize="20dp"
+                    android:textStyle="italic" />
 
                 <View
                     android:layout_width="match_parent"
@@ -144,15 +144,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:paddingHorizontal="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="5dp"
                     android:text="Top Rated Tutors"
                     android:textColor="@color/black"
                     android:textSize="15dp"
@@ -161,7 +160,36 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_toptutors"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/whitesmoke" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="50dp"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Best Reviewed Tutors"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_besttutors"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
         </LinearLayout>
