@@ -109,7 +109,7 @@ public class LearnerHomeFragment extends Fragment {
         adapter2 = new TopTutorAdapter(options1,getContext());
         rv1.setAdapter(adapter2);
 
-        Query query2 = fireStore.collection("Tutors").whereEqualTo("available", true).orderBy("pos_review_count", Query.Direction.DESCENDING).orderBy("fullName", Query.Direction.ASCENDING);
+        Query query2 = fireStore.collection("Tutors").whereEqualTo("available", true).whereGreaterThan("pos_review_count",1).orderBy("pos_review_count", Query.Direction.DESCENDING).orderBy("fullName", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<TutorModel> options2 = new FirestoreRecyclerOptions.Builder<TutorModel>().
                 setQuery(query2, TutorModel.class).build();
         adapter3 = new TopTutorAdapter(options2,getContext());
